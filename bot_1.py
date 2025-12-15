@@ -91,6 +91,20 @@ async def banir(ctx, membro: discord.Member, *, motivo="Nenhum motivo"):
 async def eco(ctx, *, eco):
     await ctx.send(eco)
 
+
+@bot.command()
+async def meme(ctx):
+    # O bot procura na pasta 'images' pelo arquivo 'meme.jpg'
+    if os.path.exists('image/meme.jpg'):
+        with open('image/meme.jpg', 'rb') as f:
+            picture = discord.File(f)
+            await ctx.send(file=picture)
+    else:
+        await ctx.send("🚨 Erro: Não achei a pasta 'images' ou a foto 'meme.jpg'!")
+
+    
+
+
 # --- TOKEN (SEMPRE A ÚLTIMA LINHA) ---
 bot.run(os.getenv('DISCORD_SECRET'))
 
