@@ -4,7 +4,7 @@ import asyncio
 from discord.ext import commands
 import os
 from dotenv import load_dotenv
-from gemini import client
+from main.gemini import client
 
 # CARREGANDO .ENV
 print(f"📂 Pasta atual: {os.getcwd()}")

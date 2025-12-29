@@ -1,0 +1,88 @@
+/* --- PALETA DE CORES: BRANCO, PRETO, CINZA, AZUL --- */
+
+body {
+    background-color: #ffffff; /* Fundo BRANCO */
+    color: #333333;            /* Texto CINZA ESCURO (quase preto) */
+    
+    font-family: Arial, sans-serif;
+    font-size: 16px;           /* Tamanho confortável */
+    text-align: center;
+    padding-top: 50px;
+    line-height: 1.6;
+}
+/* --- WIDGET (IFRAME) --- */
+iframe {
+    margin-top: 30px; /* Espaço para não grudar na foto */
+    border: none;     /* Remove a borda padrão feia */
+    border-radius: 12px; /* Arredonda os cantos */
+    box-shadow: 0px 5px 15px rgba(0,0,0,0.1); /* Sombra leve */
+    
+    /* Garante que ele não ultrapasse a tela em celulares */
+    max-width: 90%; 
+}
+/* --- ANIMAÇÃO DO WIDGET DE CLIMA --- */
+/* Quando o mouse passar por cima (hover) do iframe */
+iframe:hover {
+    /* Move o widget 5 pixels para cima */
+    transform: translateY(-5px);
+    
+    /* Aumenta a sombra, deixando-a mais difusa e escura */
+    box-shadow: 0px 15px 30px rgba(0,0,0,0.3);
+    
+    /* Garante que a mudança seja suave e não instantânea */
+    transition: all 0.3s ease-in-out;
+}
+/* --- TÍTULOS --- */
+h1 {
+    color: #0056b3; /* AZUL Profundo */
+    font-size: 32px; /* Aumentei um pouco para dar destaque */
+    font-family: Georgia, serif;
+    
+    /* Isso faz a mudança de cor ser suave e não "seca" */
+    transition: color 0.3s; 
+}
+
+h2 {
+    color: #666666; /* CINZA Médio */
+    font-size: 18px;
+    text-transform: uppercase;
+    letter-spacing: 2px; /* Espaça as letras para ficar chique */
+}
+
+/* --- ANIMAÇÃO (A TAREFA DO PROFESSOR) --- */
+/* Quando passar o mouse (hover), roda a animação 'pulso-azul' */
+h1:hover {
+    animation: pulso-azul 2s infinite;
+    cursor: pointer; /* Mãozinha do mouse */
+}
+
+/* A Mágica: Cria a animação de Azul para Preto */
+@keyframes pulso-azul {
+    0%   { color: #0056b3; transform: scale(1); }    /* Azul - tamanho normal */
+    50%  { color: #000000; transform: scale(1.1); }  /* Preto - cresce um pouquinho */
+    100% { color: #0056b3; transform: scale(1); }    /* Volta pro Azul */
+}
+
+/* --- IMAGEM --- */
+img {
+    margin-top: 30px;
+    border-radius: 10px;
+    
+    /* Adicionei uma borda AZUL para combinar com o tema */
+    border: 4px solid #e0e0e0; /* Começa com borda cinza clara */
+    
+    box-shadow: 0px 10px 20px rgba(0,0,0,0.2); /* Sombra elegante */
+    max-width: 100%;
+}
+
+/* Bônus: A borda da imagem fica azul quando passa o mouse */
+img:hover {
+    border-color: #0056b3;
+    transition: 0.5s;
+}
+/* --- RODAPÉ --- */
+footer {
+    margin-top: 50px; /* Empurra para baixo */
+    font-size: 12px;
+    color: #999;      /* Cinza claro */
+}
