@@ -1,41 +1,63 @@
-from flask import Flask
-import random
+from flask import Flask, render_template
+from api_gemini import model
 
 app = Flask(__name__)
 
-# Lista de fatos
-facts_list = [
-    "A maioria das pessoas que sofrem de dependência tecnológica sente um forte estresse quando está fora da rede.",
-    "Mais de 50% das pessoas entre 18 e 34 anos se consideram dependentes de seus smartphones.",
-    "O estudo da dependência tecnológica é uma das áreas mais relevantes da pesquisa científica moderna.",
-    "Mais de 60% das pessoas respondem a mensagens de trabalho em até 15 minutos após sair do serviço.",
-    "Uma forma de combater a dependência é buscar atividades offline que tragam prazer.",
-    "As redes sociais são projetadas para nos manter dentro da plataforma o máximo de tempo possível.",
-    "Elon Musk defende a regulamentação das redes sociais e proteção de dados.",
-    "Devemos estar conscientes dos pontos positivos e negativos das redes sociais."
-]
+size_dictionary = ["Casa Pequena", "Casa Média", "Casa Grande"]
 
-@app.route("/")
-def home():
-    # Adicionei links para TODAS as suas páginas aqui!
-    return '''
-    <h1>Bem-vindo ao meu Site!</h1>
-    <p><a href="/random_fact">🎲 Ver um fato aleatório</a></p>
-    <p><a href="/moeda">🪙 Jogar Cara ou Coroa</a></p>
-    '''
+@app.route('/')
+def index():
+    return render_template('index.html')
 
-@app.route("/random_fact")
-def fact():
-    return f'<h1>{random.choice(facts_list)}</h1> <a href="/">Voltar</a>'
+@app.route('/<size>')
+def lights(size):
+    return render_template('lights.html', size=size)
 
-# --- AQUI ESTÁ A SUA PÁGINA SECRETA ---
-@app.route("/moeda")
-def coin_flip():
-    resultado = random.choice(["Cara", "Coroa"])
-    return f'''
-    <h1>O resultado foi: {resultado}</h1>
-    <p><a href="/moeda">Jogar de novo</a></p>
-    <p><a href="/">Voltar para o início</a></p>
-    '''
+@app.route('/<size>/<lights>')
+def electronics(size, lights):
 
-app.run(debug=True)
+    if ( int(lights) != 4): 
+        print(f"{lights} !={ int(lights)}")
+        return render_template('electronics.html', size=size, lights=lights)
+
+    # 2. Pergunta ao Gemini uma dica sobre esse consumo
+    ai_message = get_ai_tip(f" A minha casa é {size_dictionary[int(size)-1]}, preciso de ajuda oara que ela fique bastante ecológica. Quantas lampadas eu tenho que ter para ter bastante iluminação, mas ainda sendo ecológico? E quantos aparelhos eletronicos? E Qual é o consumo total por mês simulado, usando a formula: size * lights * device, onde size é de 0 a 3 ( sendo 3 casa grande), lights de 0 a 3 ( sendo 3 muitas luzes ), e device de 0 a 3. ")
+
+    # 3. Envia O CÁLCULO e a MENSAGEM DO GEMINI para o site
+    return render_template('end.html', 
+                           result=0, 
+                           gemini_tip=ai_message)
+
+@app.route('/<size>/<lights>/<device>')
+def end(size, lights, device):
+    # 1. Faz o cálculo matemático
+    
+    total_consumption = calculate(int(size), int(lights), int(device))
+
+    # 3. Envia O CÁLCULO e a MENSAGEM DO GEMINI para o site
+    return render_template('end.html', 
+                           result=total_consumption, 
+                           gemini_tip="")
+
+# Função matemática simples
+def calculate(size, lights, device):
+    return size * lights * device
+
+def get_ai_tip(consumption):
+    try:    
+        prompt = (f"Question: {consumption} "
+                  "Aja como um consultor de sustentabilidade ou um globalista abaixonado e dê uma dica curta (máximo 1 paragrafo), "
+                  "criativa e prática de como economizar energia nesse cenário. "
+                  "Fale de forma amigável, direta e um pouco sarcastica.")
+        
+        response = model.generate_content(prompt)
+
+        return response.text
+    except Exception as e:
+        # Se der erro na IA, retorna uma mensagem padrão para o site não quebrar
+        print(f"Erro na chamada da IA: {e}")
+        return "Dica: Use lâmpadas LED e aproveite a luz natural para economizar!"
+
+
+if __name__ == "__main__":
+    app.run(debug=True)

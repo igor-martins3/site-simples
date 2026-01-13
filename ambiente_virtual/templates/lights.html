@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/static/css/style.css">
+  <title>Luzes</title>
+</head>
+<body>
+  <header class="header">
+    <div class="header__text">
+      <h1>Quantas lâmpadas você possui?</h1>
+    </div>
+  </header>
+  <main>
+    <ul class="list">
+      <li class="list__item">
+        <a href="/{{ size }}/1">
+           <img class="item__img" src="/static/img/light.svg" alt="light"> 
+           <span>Poucas luzes (1-2)</span>
+        </a> 
+      </li>
+      <li class="list__item">
+        <a href="/{{ size }}/2">
+           <img class="item__img" src="/static/img/light.svg" alt="light"> 
+           <span>Média quantidade (3-5)</span>
+        </a> 
+      </li>
+      <li class="list__item">
+        <a href="/{{ size }}/3">
+           <img class="item__img" src="/static/img/light.svg" alt="light"> 
+           <span>Muitas luzes (+5)</span>
+        </a> 
+      </li>
+      <li class="list__item">
+        <a href="/{{ size }}/4">
+           <img class="item__img item__img_ecologic" src="/static/img/light.svg" alt="light"> 
+           <span>Lâmpadas Ecológicas</span>
+        </a> 
+      </li>
+    </ul>
+  </main>
+</body>
+</html>
