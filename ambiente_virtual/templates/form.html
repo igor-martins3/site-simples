@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario</title>
+</head>
+<body>
+    <h1>Formalario de autenticação</h1>
+    <form action={handlesubmit}>
+        <label>
+            <span>Email: </span>
+            <input type="email" name="email" id="email" minlength="12">
+        </label>
+        <label>
+            <span>Nome: </span>
+            <input type="text" name="name" id="name">
+        </label>
+        <label>
+            <span>Idade: </span>
+            <input type="number" name="age" id="age">
+        </label>
+        <label>
+            <span>Gênero</span>
+            <select name="gender" id="gender">
+                <option value="0" disabled>Selecione</option>
+                <option value="1">Masculino</option>
+                <option value="2">Feminino</option>
+                <option value="3">Prefiro não dizer</option>
+            </select>
+        </label>
+
+        <button name="submit" type="submit">
+            Acessar a calculadora
+        </button>
+    </form>
+    <script>
+        function handlesubmit (e) {
+            e.preventDefault()
+            
+            console.log(e)
+
+            // window.location.href = "index.html"
+
+            return
+        }
+
+    </script>
+</body>
+</html>
